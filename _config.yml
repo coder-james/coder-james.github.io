@@ -1,0 +1,40 @@
+# Document:
+# http://simiki.org/docs/configuration.html
+
+#site url
+url: 
+#site title.Used by the meta settings of site
+title: My Wiki
+#site keywords.Used by the meta settings of site 
+keywords: wiki, python
+#site description.Used by the meta settings of site
+description: My Wiki
+#site author
+author: coder-james
+
+#site root directory. In general there is no need to set/change this.
+#if your site is in a subdirectory, such as http://example.com/wiki/, set url as http://example.com/wiki/ and root as /wiki/.
+root: /
+#directory to store the source files(only support markdown file by now). Modify the default value is not recommended
+source: content
+#directory to store the output html files. Modify the default value is not recommended
+destination: output
+#directory to store the attachment(such as image, compression package, etc.).
+#this directory will be copied to output/ when do generating, as attach/path/to/file will be copied to output/attach/path/to/file.
+#this directory doesn't created when init site, if need, you should create it manually. Modify the default value is not recommended
+attach: attach
+#directory to store all the themes. Every theme is a subdirectory. Modify the default value is not recommended
+themes_dir: themes
+#specified the theme, whose name is the same as directory name under themes_dir
+theme: simple
+#the default extension when creating a new page
+default_ext: md
+#set true to enable the code lighlight feature
+pygments: true
+#set true to enable debug mode
+debug: false
+
+deploy:
+  - type: git
+    remote: origin
+    branch: gh-pages
