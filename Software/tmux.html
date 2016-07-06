@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Tmux - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Software">Software</a>&nbsp;»&nbsp;Tmux</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Tmux</div>
+  <div id="content">
+  <h4 id="tmux">Tmux 安装</h4>
+<h6 id="linux">Linux</h6>
+<p>准备软件：</p>
+<p><code>libevent-2.0.10-stable.tar.gz</code></p>
+<p><code>tmux-2.0.tar.gz</code></p>
+<p>安装步骤</p>
+<ol>
+<li>yum install gcc</li>
+<li>yum install ncurses-devel</li>
+<li>
+<p>安装libevent </p>
+<p>./configure</p>
+<p>make</p>
+<p>make install
+4. 安装tmux</p>
+<p>./configure</p>
+<p>make</p>
+<p>make install</p>
+</li>
+</ol>
+<h3 id="qa">Q&amp;A</h3>
+<p><code>libevent-2.0.so.5: cannot open shared object file: No such file or directory</code></p>
+<p>libevent-2.0.so.5默认安装目录，无法找到，需要建立软链接</p>
+<p><code>ln -s /usr/local/lib/libevent-2.0.so.5 /usr/lib64/libevent-2.0.so.5</code></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

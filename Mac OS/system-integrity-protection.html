@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>System Integrity Protection - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Mac OS">Mac OS</a>&nbsp;»&nbsp;System Integrity Protection</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">System Integrity Protection</div>
+  <div id="content">
+  <h3 id="system-integrity-protection">System Integrity Protection</h3>
+<h4 id="mac-os-x-1011-ei-capitan">Mac OS X 10.11 EI Capitan</h4>
+<div class="hlcode"><pre><span></span>    SIP是一个被设计用来预防潜在恶意软件修改Mac上受保护文件和文件夹的安全技术。
+
+    在OS X中，“root”用户没有权限限制，可以访问任何Mac上的系统文件夹或应用。在你安装软件输入管理账户和密码时，一旦软件获取了root级别的访问权限，便可以修改和重写任何系统文件或应用。这是非常危险的！
+    系统完整性保护机制限制了root账户的权限，使得root账户不能进行所有受保护文件的操作。例如：/System,/usr,/bin,/sbin
+</pre></div>
+
+
+<p>重启Mac，按下<code>option[alt] + R</code>进入恢复模式</p>
+<p>选择<code>Utilities/Terminal</code>检查SIP状态：  </p>
+<p><code>csrutil status</code></p>
+<p><code>csrutil disable</code> 停用SIP</p>
+<p><code>csrutil enable</code> 开启SIP</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

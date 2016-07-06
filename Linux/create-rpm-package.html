@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Create Rpm Package - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;Create Rpm Package</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Create Rpm Package</div>
+  <div id="content">
+  <h3 id="rpm">创建Rpm包</h3>
+<h5 id="linux-centos">Linux CentOS</h5>
+<ol>
+<li>
+<p>下载相关软件包</p>
+<p><code>yum install rpm-build rpmdevtools</code></p>
+</li>
+<li>
+<p>初始目录 </p>
+<p><code>rpmdev-setuptree</code>  默认目录<em>~/rpmbuild</em></p>
+<p><img alt="alt text" src="../attach/linux1.png" /></p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>代码</th>
+<th>名称</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BUILD</td>
+<td>%_builddir</td>
+<td>构建目录</td>
+<td>源代码包解压至此，并编译</td>
+</tr>
+<tr>
+<td>RPMS</td>
+<td>%_rpmdir</td>
+<td>标准RPM包目录</td>
+<td>生成/保存二进制RPM包</td>
+</tr>
+<tr>
+<td>SOURCES</td>
+<td>%_sourcedir</td>
+<td>源代码目录</td>
+<td>保存源码包(.tar)和所有patch补丁</td>
+</tr>
+<tr>
+<td>SPECS</td>
+<td>%_specdir</td>
+<td>Spec文件目录</td>
+<td>保存RPM包配置文件(.spec)</td>
+</tr>
+<tr>
+<td>SRPMS</td>
+<td>%_srcrpmdir</td>
+<td>源代码RPM包目录</td>
+<td>生成/保存源码RPM包(SRPM)</td>
+</tr>
+<tr>
+<td>BUILDROOT</td>
+<td>%_buidrootdir</td>
+<td>最终安装目录</td>
+<td>保存%install阶段安装文件</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>读取</th>
+<th>写入</th>
+<th>具体</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%prep</td>
+<td>%_sourcedir</td>
+<td>%_builddir</td>
+<td>读取源代码和patch，解压</td>
+</tr>
+<tr>
+<td>%build</td>
+<td>%_buiddir</td>
+<td>%_builddir</td>
+<td>编译(./configure &amp;&amp; make)</td>
+</tr>
+<tr>
+<td>%install</td>
+<td>%_buiddir</td>
+<td>%_buildrootdir</td>
+<td>读取安装，这些文件就是用户安装RPM后得到的文件(make install)</td>
+</tr>
+<tr>
+<td>%check</td>
+<td>%_builddir</td>
+<td>%_builddir</td>
+<td>检查软件是否正常运行(make test)很多不需要</td>
+</tr>
+<tr>
+<td>bin</td>
+<td>%_buildrootdir</td>
+<td>%_rpmdir</td>
+<td>创建rpm包</td>
+</tr>
+<tr>
+<td>src</td>
+<td>%_sourcedir</td>
+<td>%_srcrpmdir</td>
+<td>创建源码rpm包</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ol>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

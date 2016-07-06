@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>ssh tunnel - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Network">Network</a>&nbsp;»&nbsp;ssh tunnel</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">ssh tunnel</div>
+  <div id="content">
+  <h4 id="ssh-socks5">SSH SOCKS5代理</h4>
+<h5 id="_1">访问内网机器</h5>
+<ul>
+<li>机器A 端口port1<br />
+  内网主机，即要访问的主机</li>
+<li>机器B 端口port2<br />
+  跳板主机，即双网卡机器，可访问内网和外网</li>
+<li>机器C 端口port3<br />
+  请求主机</li>
+</ul>
+<h5 id="socks5">建立SOCKS5代理</h5>
+<p>在机器C上建立SOCKS5代理</p>
+<p><code>ssh -N -f -D 127.0.0.1:port3  [user]@[机器B IP] -p [port2]</code></p>
+<p>期间可能需要输入[user]登录密码验证</p>
+<h5 id="socks5_1">使用SOCKS5代理</h5>
+<h6 id="chrome-switchysharp">Chrome SwitchySharp插件</h6>
+<p>设置如下：</p>
+<p><img alt="alt text" src="../attach/chromescreenshot.png" /> </p>
+<p>于是通过chrome浏览器就可以访问内网服务器了。</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

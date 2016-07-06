@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Python Package Development - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Python Package Development</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Python Package Development</div>
+  <div id="content">
+  <p><img alt="alt text" src="../attach/python-logo.png" /></p>
+<h3 id="pypi-the-python-package-index">PyPI - the Python Package Index</h3>
+<p>PyPI是Python编程语言的软件源，其中有超过8万个包，本文将教会大家如何独立开发python软件，并上传至PyPI。</p>
+<ol>
+<li>
+<p>账号准备</p>
+<p>需要在https://pypi.python.org/pypi和https://testpypi.python.org/pypi(测试站点)注册账号，通过邮箱验证后即可使用</p>
+</li>
+<li>
+<p>Python项目布局</p>
+<p>使用cookiecutter模板来生成项目结构，首先安装：</p>
+<p><code>pip install cookiecutter</code></p>
+<p><code>cookiecutter https://github.com/wdm0006/cookiecutter-pipproject.git</code> 按照提示，依次输入项目信息，如全名、email、项目名等，如下为小编生成的mcheck目录结构</p>
+<p><img alt="alt text" src="../attach/python-project-structure.png" /></p>
+<ul>
+<li>LICENSE 许可证协议
+    小编将项目上传到了github上，并使用GPL许可证</li>
+<li>docs 项目文档</li>
+<li>dist 之后打包的项目会在该目录下</li>
+<li>mcheck 项目代码，文件目录和项目名相同</li>
+<li>mcheck.egg-info 之后打包项目自动生成的文件</li>
+<li>requirements.txt 项目依赖的软件包</li>
+<li>setup.py 包含所有的项目信息，被distuils用来安装Python包</li>
+</ul>
+</li>
+<li>
+<p>上传测试</p>
+<p>项目开发完成后，通过以下命令上传至刚才的测试站点，在此之前，需要在~/目录下新建.pypirc文件内容如下：</p>
+<div class="hlcode"><pre><span></span><span class="k">[distutils]</span>
+    <span class="na">index-servers</span> <span class="o">=</span>
+<span class="err">pypi</span>
+<span class="err">pypitest</span>
+
+<span class="k">[pypi]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://pypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">coder-james</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">xxx</span>
+
+<span class="k">[pypitest]</span>
+<span class="na">repository</span> <span class="o">=</span> <span class="s">https://testpypi.python.org/pypi</span>
+<span class="na">username</span> <span class="o">=</span> <span class="s">coder-james</span>
+<span class="na">password</span> <span class="o">=</span> <span class="s">xxx</span>
+</pre></div>
+
+
+<p>pypi和pypitest分别为之前注册账号的站点，现在我们将项目上传至测试站点，首先在站点注册我们的项目：</p>
+<p><code>python setup.py register -r pypitest</code></p>
+<p>然后上传，其中sdist是以可pip安装的形式打包我们的python项目，可以看到打包后，会在dist项目下生成我们的python包mcheck-0.0.1.tar.gz：</p>
+<p><code>python setup.py sdist upload -r pypitest</code></p>
+<p>确认我们项目在服务器上后，我们就可以从测试站点安装我们的python包了：</p>
+<p><code>pip install -i https://testpypi.python.org/pypi mcheck</code></p>
+<p>注意每次上传时，不能提交相同版本号的项目。
+4. 发布</p>
+<p>在测试成功后，我们还可以上传至pypi站点，以供大家下载使用，命令与上面相似：
+<code>python setup.py register -r pypi</code> </p>
+<p><code>python setup.py sdist upload -r pypi</code></p>
+<p><code>pip install mcheck</code></p>
+</li>
+</ol>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

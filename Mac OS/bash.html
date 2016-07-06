@@ -1,0 +1,51 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Bash - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Mac OS">Mac OS</a>&nbsp;»&nbsp;Bash</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Bash</div>
+  <div id="content">
+  <ol>
+<li>
+<p>授权目录及目录下所有文件</p>
+<p>chown -R [user]:[usergroup] [directory]</p>
+<p>e.g.  <code>chown -R James:staff mywiki</code></p>
+</li>
+<li>
+<p>移动硬盘文件呈灰色，无法打开</p>
+<p><code>xattr -l [filename]</code></p>
+<p><code>xattr -d com.apple.FinderInfo [filename]</code></p>
+</li>
+<li>
+<p>Finder显示文件</p>
+<p><code>cd /</code></p>
+<p><code>sudo chflags hidden *</code></p>
+</li>
+</ol>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
