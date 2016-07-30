@@ -33,6 +33,14 @@
 <h5 id="socks5">建立SOCKS5代理</h5>
 <p>在机器C上建立SOCKS5代理</p>
 <p><code>ssh -N -f -D 127.0.0.1:port3  [user]@[机器B IP] -p [port2]</code></p>
+<ul>
+<li><code>-N</code> : 不执行远程命令，用于端口转发</li>
+<li><code>-f</code> : 输入密码后进入后台模式</li>
+<li><code>-D</code> : socket5代理</li>
+<li><code>-V</code> : 显示版本</li>
+<li><code>-L</code> : TCP转发</li>
+<li><code>-C</code> : 使用数据压缩</li>
+</ul>
 <p>期间可能需要输入[user]登录密码验证</p>
 <h5 id="socks5_1">使用SOCKS5代理</h5>
 <h6 id="chrome-switchysharp">Chrome SwitchySharp插件</h6>

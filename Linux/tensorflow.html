@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>tensorflow - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;tensorflow</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">tensorflow</div>
+  <div id="content">
+  <h3 id="tensorflow">TensorFlow编译安装</h3>
+<p>环境：
+ redhat6.5、jdk1.7.0_45</p>
+<p>依赖软件：
+ devtoolset-3、python2.7.12、cuda7.5、cudnn v5.0、tensorflow0.9</p>
+<div class="hlcode"><pre><span></span>注意：redhat6.5 gcc版本为4.4.7，需要安装devtoolset-3
+
+yum install devtoolset-3-gcc devtoolset-3-gcc-c++（提供版本4.9.2）
+
+scl enable devtoolset-3 bash  生效,否则gcc command not found，完成后通过gcc -v查看版本
+</pre></div>
+
+
+<p>可参考 <a href="https://www.softwarecollections.org/en/scls/rhscl/devtoolset-3/">devtoolset-3安装</a></p>
+<div class="hlcode"><pre><span></span>注意：redhat6.5 python版本为2.6，需要升级python2.7，因为tensorflow依赖python2.7
+</pre></div>
+
+
+<p>可参考 <a href="../Python/update-python.html">python升级</a></p>
+<h4 id="1-bazel">1. 安装Bazel</h4>
+<p><code>git clone https://github.com/bazelbuild/bazel.git</code></p>
+<p><code>cd bazel</code></p>
+<p>其中需要修改tools/cpp/CROSSTOOL文件，找到toolchain_identifier:"local_linux"的代码块，将tool_path都替换成devtoolset-3中的路径，如：/usr/bin/ar =&gt; /opt/rh/devtoolset-3/root/usr/bin/ar</p>
+<p><code>./compile.sh</code></p>
+<p>编译会报错，因为我们的JDK版本是1.7，所以需要修改scripts/bootstrap/buildenv.sh 第36行代码，如下图：</p>
+<p><img alt="alt text" src="../attach/tensorflow1.png" /></p>
+<p>在编译的过程，通过查看临时文件中的错误，发现：</p>
+<p><img alt="alt text" src="../attach/tensorflow4.png" /></p>
+<p>所以仍然不建议使用JDK1.7，毕竟从bazel0.1开始，就不赞成使用JDK1.7，缺省使用JDK1.8了。</p>
+<p>之后还会遇到错误，如下：</p>
+<p><img alt="alt text" src="../attach/tensorflow2.png" /></p>
+<p>这是因为StandardLocation类虽然从JDK1.6就有了，但是静态成员NATIVE_HEADER_OUTPUT却是从JDK1.8才有，所以需要修改src/java_tools/buildjar/java/com/google/devtools/build/java/turbine/javac/ZipOutputFileManager.java 第59行代码</p>
+<p><img alt="alt text" src="../attach/tensorflow3.png" /></p>
+<p>最后，编译成功，生成文件在output/bazel，链接到/usr/local/bin/bazel即可使用。</p>
+<h4 id="2-tensorflow">2. 安装TensorFLow</h4>
+<p>准备工作：需要安装cuda,cudnn</p>
+<p>本次使用的是cuda7.5 cudnn-5.0</p>
+<p><code>git clone https://github.com/tensorflow/tensorflow</code></p>
+<p><code>./configure</code> 如下配置：</p>
+<p><img alt="alt text" src="../attach/tensorflow5.png" /></p>
+<p>!需要修改third_party/gpus/crosstool/CROSSTOOL和third_party/gpus/crosstool/clang/bin/crosstool_wrapper_driver_is_not_gcc具体如下：</p>
+<p><img alt="alt text" src="../attach/tensorflow11.png" /></p>
+<p><img alt="alt text" src="../attach/tensorflow12.png" /></p>
+<p><img alt="alt text" src="../attach/tensorflow13.png" /></p>
+<p>之后开始编译:</p>
+<p><code>bazel build -c opt -config=cuda --verbose_failures //tensorflow/cc:tutorials_example_trainer</code></p>
+<p>其中会碰到很多问题，整理如下：</p>
+<p>1.ImportError: No module named numpy</p>
+<p>安装pip,注意是为升级后python安装,然后<code>pip install numpy</code></p>
+<p>2.ImportError: No module named argparse</p>
+<p>同上，缺失argparse，所以<code>pip install argparse</code></p>
+<p>3.错误如下：</p>
+<p><img alt="alt text" src="../attach/tensorflow6.png" /></p>
+<p>参考<a href="https://github.com/tensorflow/tensorflow/issues/2291">github issue2291</a></p>
+<p>修改相应文件如下：</p>
+<p><img alt="alt text" src="../attach/tensorflow7.png" /></p>
+<p>4.Out of Memory:</p>
+<p><img alt="alt text" src="../attach/tensorflow8.png" /></p>
+<p>原因可能是bazel在编译时默认的并行线程数太大，造成内存消耗太大，通过指定local_resources和jobs重新编译，更改如下：</p>
+<p><code>bazel build -c opt --config=cuda --verbose_failures --local_resources 2048,2.0,1.0 -j 1  //tensorflow/cc:tutorials_example_trainer</code></p>
+<p>可参考<a href="http://www.bazel.io/docs/bazel-user-manual.html">bazel手册</a></p>
+<p>最终编译成功：</p>
+<p><img alt="alt text" src="../attach/tensorflow9.png" /></p>
+<p>测试如下：</p>
+<p><img alt="alt text" src="../attach/tensorflow10.png" /></p>
+<p>如果需要支持gpu,上述命令加--use_gpu</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

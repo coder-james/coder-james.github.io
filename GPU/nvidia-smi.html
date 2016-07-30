@@ -1,0 +1,114 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>nvidia-smi - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#GPU">GPU</a>&nbsp;»&nbsp;nvidia-smi</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">nvidia-smi</div>
+  <div id="content">
+  <h4 id="nvsmi">NVSMI</h4>
+<p>NVSMI提供了对每个NVIDIA Tesla设备的监控信息，本文主要分析监控信息中各个字段的含义。</p>
+<p>在安装Tesla GPU的机器上运行<code>nvidia-smi</code>命令，显示如下图，<code>nvidia-smi -q</code>会显示更详细的信息，字段含义可参考 <a href="http://developer.download.nvidia.com/compute/cuda/6_0/rel/gdk/nvidia-smi.331.38.pdf">nvidia-smi手册</a>：</p>
+<p><img alt="alt text" src="../attach/nvidia_smi1.png" /></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>含义</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Driver Version</td>
+<td>驱动版本号</td>
+<td></td>
+</tr>
+<tr>
+<td>GPU</td>
+<td>对应GPU编号</td>
+<td></td>
+</tr>
+<tr>
+<td>NAME</td>
+<td>GPU产品名称</td>
+<td></td>
+</tr>
+<tr>
+<td>Persistence-M</td>
+<td>持久化模式是否开启</td>
+<td>Persistence Mode</td>
+</tr>
+<tr>
+<td>Fan</td>
+<td>设备风扇趋于最大转速</td>
+<td>Fan Speed</td>
+</tr>
+<tr>
+<td>Temp</td>
+<td>主板温度</td>
+<td>Temperature</td>
+</tr>
+<tr>
+<td>Perf</td>
+<td>GPU当前性能状态</td>
+<td>Performance State,value p0(max)~p12</td>
+</tr>
+<tr>
+<td>Pwr:Usage/Cap</td>
+<td>功率消耗/功率限制</td>
+<td>Power Draw/Power Limit</td>
+</tr>
+<tr>
+<td>Bus-Id</td>
+<td>PCI总线id</td>
+<td>PCI Bus id</td>
+</tr>
+<tr>
+<td>Disp.A</td>
+<td>显示活跃</td>
+<td>Display Active</td>
+</tr>
+<tr>
+<td>Memory-Usage</td>
+<td>frame buffer内存信息</td>
+<td></td>
+</tr>
+<tr>
+<td>GPU-Util</td>
+<td>GPU</td>
+<td>Utilization GPU</td>
+</tr>
+<tr>
+<td>Compute M.</td>
+<td>一个或多个运行的计算应用</td>
+<td>Compute Mode，Default意味每个设备允许多个上下文,Exclusive Thread:每个设备一个上下文，一次可被一个线程使用,Exclusive Process:每个设备一个上下文，一次可被多个线程利用，其他等。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>Update Python - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;Update Python</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">Update Python</div>
+  <div id="content">
+  <h3 id="python">Python升级</h3>
+<p>环境:
+操作系统python版本较低，如CentOS6.5自带python版本为2.6，无法通过yum进行升级安装，所以需要手动源码编译python升级（python2.6 =&gt; python2.7）</p>
+<p>Python官网找到相应的python版本源码，下载到本地：</p>
+<p><code>wget https://www.python.org/ftp/python/2.7.12/Python-2.7.12.tar.xz</code></p>
+<p>解压并进入目录:</p>
+<p><code>cd Python-2.7.12 ; ./configure</code></p>
+<p>编译的时候，会出现一些提示信息，Python build finished, but the necessary bits to build these modules were not found:xxx，也就是系统没有办法找到对应的模块信息，需要我们提前安装依赖包,对应列表如下：</p>
+<table>
+<thead>
+<tr>
+<th>模块</th>
+<th>依赖</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>_bsddb</td>
+<td>bsddb</td>
+<td>Interface to Berkeley DB library。Berkeley数据库的接口</td>
+</tr>
+<tr>
+<td>_curses</td>
+<td>ncurses</td>
+<td>Terminal handling for character-cell displays。</td>
+</tr>
+<tr>
+<td>_curses_panel</td>
+<td>ncurses</td>
+<td>A panel stack extension for curses。</td>
+</tr>
+<tr>
+<td>_sqlite3</td>
+<td>sqlite</td>
+<td>DB-API 2.0 interface for SQLite databases。SqlLite，CentOS可以安装sqlite-devel</td>
+</tr>
+<tr>
+<td>_ssl</td>
+<td>openssl-devel.i686</td>
+<td>TLS/SSL wrapper for socket objects。</td>
+</tr>
+<tr>
+<td>_tkinter</td>
+<td>N/A</td>
+<td>a thin object-oriented layer on top of Tcl/Tk。如果不使用桌面程序可以忽略TKinter</td>
+</tr>
+<tr>
+<td>bsddb185</td>
+<td>old bsddb module</td>
+<td>老的bsddb模块，可忽略。</td>
+</tr>
+<tr>
+<td>bz2</td>
+<td>bzip2-devel.i686</td>
+<td>Compression compatible with bzip2。bzip2-devel</td>
+</tr>
+<tr>
+<td>dbm</td>
+<td>bsddb</td>
+<td>Simple “database” interface。</td>
+</tr>
+<tr>
+<td>dl</td>
+<td>N/A</td>
+<td>Call C functions in shared objects.Python2.6开始，已经弃用。</td>
+</tr>
+<tr>
+<td>gdbm</td>
+<td>gdbm-devel.i686</td>
+<td>GNU’s reinterpretation of dbm</td>
+</tr>
+<tr>
+<td>imageop</td>
+<td>N/A</td>
+<td>Manipulate raw image data。已经弃用。</td>
+</tr>
+<tr>
+<td>readline</td>
+<td>readline-devel</td>
+<td>GNU readline interface</td>
+</tr>
+<tr>
+<td>sunaudiodev</td>
+<td>N/A</td>
+<td>Access to Sun audio hardware。这个是针对Sun平台的，CentOS下可以忽略</td>
+</tr>
+<tr>
+<td>zlib</td>
+<td>Zlib</td>
+<td>Compression compatible with gzip</td>
+</tr>
+</tbody>
+</table>
+<p>安装依赖包：<code>yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel</code></p>
+<p><code>make; make install</code></p>
+<p>python 2.7.12 二进制文件被安装到/usr/local/bin下，为了使用，我们还改变系统python的链接，先备份后链接：</p>
+<p><code>cp /usr/bin/python /usr/bin/python-2.6.6; rm /usr/bin/python; ln -s /usr/local/bin/python /usr/bin/python</code></p>
+<p>通过<code>/usr/bin/python -V; python -V</code>可查看我们刚安装的新版本。</p>
+<p>升级python后，使用yum时，会出现问题，修改/usr/bin/yum文件首行的"#!/usr/bin/python"为"#!/usr/bin/python2.6"即可</p>
+<p>使用python2.7.12后，安装的python包，会被自动安装到/usr/local/lib/python2.7/site-packages目录下</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
