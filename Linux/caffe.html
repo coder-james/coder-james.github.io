@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>caffe - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;caffe</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">caffe</div>
+  <div id="content">
+  <h4 id="caffe">Caffe安装</h4>
+<div class="hlcode"><pre><span></span>安装环境：RedHat7  
+        NVIDIA M40
+</pre></div>
+
+
+<p>1.安装依赖：</p>
+<p><code>yum install protobuf-devel leveldb-devel snappy-devel opencv-devel boost-devel hdf5 hdf5-devel</code></p>
+<h5 id="glog">glog</h5>
+<p><code>git clone https://github.com/google/glog.git</code></p>
+<p><code>mkdir build &amp;&amp; cd build</code></p>
+<p><code>export CXXFLAGS="-fPIC" &amp;&amp; cmake .. &amp;&amp; make VERBOSE=1</code> (需要cmake-3.0 later手动编译安装`./bootstrap --prefix=/usr;make;make install)</p>
+<p><code>make install</code></p>
+<p>glog-0.3.3需要automake-1.14,如果版本不足,需要手动源码安装(需安装autoconf,texinfo)，并将glog中test-driver的链接地址修改为编译安装automake的地址，如/usr/local/share/automake-1.14/test-driver</p>
+<h5 id="gflags">gflags</h5>
+<p><code>git clone https://github.com/gflags/gflags.git</code></p>
+<p><code>mkdir build &amp;&amp; cd build &amp;&amp; ccmake ..</code> 按c配置，e忽略警告，按c直到g可用，按g</p>
+<p><code>make &amp;&amp; make install</code></p>
+<p>参考<a href="https://github.com/gflags/gflags/blob/master/INSTALL.md">gflags: Compiling the source code with CMake</a></p>
+<h5 id="lmdb">lmdb</h5>
+<p><code>git clone https://github.com/LMDB/lmdb</code></p>
+<p><code>cd libraries/liblmdb</code></p>
+<p><code>make &amp;&amp; make install</code></p>
+<h5 id="dependencies">Dependencies</h5>
+<p>CUDA(参考本网站); BLAS <code>yum install atlas-devel</code>; Python <code>yum install python-devel</code></p>
+<h4 id="compile">Compile</h4>
+<p><code>git clone https://github.com/BVLC/caffe.git</code></p>
+<p><code>cd caffe; cp Makefile.config.example Makefile.config</code></p>
+<p>修改Makefile.config文件，例如使用cuDNN,PYTHON_INCLUDE包含numpy/arrayobject.h的路径，包含libpythonx.x.so的路径，测试GPU ID，使用Python layers等</p>
+<p>开始编译：<code>make all -j[pnums]</code>（make pycaffe; make test; make runtest）</p>
+<p>遇到问题:</p>
+<p>1、/usr/bin/ld: cannnot find -lcblas -latalas</p>
+<p>修改Makefile文件第378行:</p>
+<p>LIBRARIES += cblas atlas 为 LIBRARIES += satlas tatlas, 同时在Makefile.config配置BLAS的include,lib目录，如/usr/include/atlas和/usr/lib64/atlas</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

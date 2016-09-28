@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>mxnet - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;mxnet</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">mxnet</div>
+  <div id="content">
+  <h4 id="mxnet">MXNet安装</h4>
+<div class="hlcode"><pre><span></span>安装环境：RedHat7  
+        NVIDIA M40
+</pre></div>
+
+
+<h5 id="1">1.下载</h5>
+<p><code>git clone --recursive https://github.com/dmlc/mxnet</code></p>
+<p>注意：参数--recursive会更新子模块</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dmlc-core</td>
+<td>Data I/O for filesystems such as HDFS and Amazon S3, with job launchers for Yarn, MPI, ...</td>
+</tr>
+<tr>
+<td>ps-lite</td>
+<td>The parameter server framework for asynchronous key-value push and pull</td>
+</tr>
+<tr>
+<td>mshadow</td>
+<td>A lightweight CPU/GPU Matrix/Tensor Template Library.</td>
+</tr>
+</tbody>
+</table>
+<p>依赖：g++ &gt;=4.8 or clang; BLAS library; CUDA Toolkit &gt;=v7.0 for nvidia GPUs; CUDNN; opencv for image augmentation; Atlas</p>
+<h5 id="2-libmxnetso">2.编译共享库 libmxnet.so</h5>
+<p><code>cd mxnet &amp;&amp; make -j16</code> (并发线程数根据实际环境设置)</p>
+<p>问题：</p>
+<p>1./usr/bin/ld: cannot find -lcblas</p>
+<p>make/config.mk</p>
+<p>需要修改ADD_LDFLAGS = -L/usr/lib64/atlas -L/usr/include</p>
+<p>mshadow/make/mshadow.mk</p>
+<p>需要修改56行 -lcblas =&gt; -lsatlas or -ltatlas</p>
+<p>2.hdfs.h no such file </p>
+<p>原因在于dmlc-core/make/dmlc.mk,设置好HADOOP_HDFS_HOME环境变量,同时，LD_LIBRARY_PATH中要带上libhdfs.so的目录如:$HADOOP_HDFS_HOME/lib/native/ </p>
+<p>3.cuda.h no such file 如果选择支持GPU，即使用CUDA，需要修改make/config.mk</p>
+<p>USE_CUDA_PATH=/usr/local/cuda (安装CUDA的路径)</p>
+<p>4.cblas.h no such file</p>
+<p><code>yum install atlas-devel</code></p>
+<p>5.No package 'opencv' found</p>
+<p><code>yum install opencv-devel</code></p>
+<h5 id="3python-package-installation">3.Python Package Installation</h5>
+<p>依赖: Python &gt;= 2.7 and numpy</p>
+<p><code>cd python; python setup.py install</code></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

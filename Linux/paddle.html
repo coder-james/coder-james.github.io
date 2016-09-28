@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>paddle - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Linux">Linux</a>&nbsp;»&nbsp;paddle</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">paddle</div>
+  <div id="content">
+  <h4 id="paddle">Paddle安装</h4>
+<p>Baidu Paddle(PArallel Distributed Deep LEarning)</p>
+<p>环境：
+    RedHat 7</p>
+<p>依赖：</p>
+<p>-- CMake &gt;=2.8</p>
+<p>-- g++ &gt;=4.6,&lt;5</p>
+<p>-- BLAS: openBLAS, MKL, ATLAS(use)</p>
+<p>-- protobuf &gt;=2.4,not support 3.x</p>
+<p>-- python 2.7</p>
+<p>-- (option)(use) glog,gflags,CUDA,cuDNN,sphinx for Doc,swig for PaddlePaddle with python.</p>
+<p>注意：编译glog时，可能需要cmake版本3.x</p>
+<p>下载:</p>
+<p><code>git clone https://github.com/baidu/Paddle paddle</code></p>
+<p><code>cd paddle;mkdir build;cd build</code></p>
+<p><code>cmake -DWITH_GPU=ON ..</code>具体选项参考CMakeLists.txt文件</p>
+<p><code>make -j[nproc]; make install</code></p>
+<p>如果set WITH_SWIG_PY=ON，需要安装相关包<code>pip install &lt;path to install&gt;/opt/paddle/share/wheels/*.whl</code>（可能需要pip版本升级）</p>
+<p>可能遇到问题：</p>
+<ol>
+<li>使用atlas 3.0，原先的6个库被融合到了两个库libsatlas.so、libtatlas.so，所以需要修改$PADDLE_ROOT/cmake/cblas.make文件，如下图注释：</li>
+</ol>
+<p><img alt="alt" src="../attach/paddle1.jpg" /></p>
+<p>2.cannot find -gflags_static</p>
+<p>paddle为了解决gflags2.1.2之前版本出现的问题（https://github.com/gflags/gflags/issues/110），在FindGflags.cmake中做了处理，所以只需要下载gflags2.1.2版本即可，目前gflags修改后的版本为2.2.0，但仍未完全改好，需要注意版本问题</p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>

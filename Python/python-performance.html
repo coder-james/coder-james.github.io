@@ -1,0 +1,96 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <link rel="Stylesheet" type="text/css" href="/static/css/style.css">
+        <link rel="Stylesheet" type="text/css" href="/static/css/tango.css">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>python-performance - My Wiki</title>
+        <meta name="keywords" content="wiki, python"/>
+        <meta name="description" content="My Wiki"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+
+    <body>
+        <div id="container">
+            
+<div id="header">
+  <div id="post-nav"><a href="/">Home</a>&nbsp;»&nbsp;<a href="/#Python">Python</a>&nbsp;»&nbsp;python-performance</div>
+</div>
+<div class="clearfix"></div>
+<div id="title">python-performance</div>
+  <div id="content">
+  <h4 id="python">Python 性能测试</h4>
+<p>先看示例代码timing_function.py：</p>
+<div class="hlcode"><pre><span></span><span class="kn">from</span> <span class="nn">guppy</span> <span class="kn">import</span> <span class="n">hpy</span>
+<span class="kn">import</span> <span class="nn">time</span>
+<span class="kn">import</span> <span class="nn">random</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+
+<span class="k">def</span> <span class="nf">fn_timer</span><span class="p">(</span><span class="n">function</span><span class="p">):</span>
+  <span class="nd">@wraps</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+  <span class="k">def</span> <span class="nf">function_timer</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="n">t0</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">t1</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+    <span class="k">print</span> <span class="p">(</span><span class="s2">&quot;Total time running </span><span class="si">%s</span><span class="s2">: </span><span class="si">%s</span><span class="s2"> seconds&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">function</span><span class="o">.</span><span class="n">func_name</span><span class="p">,</span> <span class="nb">str</span><span class="p">(</span><span class="n">t1</span> <span class="o">-</span> <span class="n">t0</span><span class="p">)))</span>
+    <span class="k">return</span> <span class="n">result</span>
+  <span class="k">return</span> <span class="n">function_timer</span>
+
+<span class="nd">@fn_timer</span>
+<span class="k">def</span> <span class="nf">random_sort</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="k">return</span> <span class="nb">sorted</span><span class="p">([</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)])</span>
+
+<span class="c1">#@profile</span>
+<span class="k">def</span> <span class="nf">random_sort2</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+  <span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">l</span>
+
+<span class="k">def</span> <span class="nf">random_sort3</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+  <span class="n">hp</span> <span class="o">=</span> <span class="n">hpy</span><span class="p">()</span>
+  <span class="k">print</span> <span class="s2">&quot;Heap at the beginning of the function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">heap</span><span class="p">()</span>
+  <span class="n">l</span> <span class="o">=</span> <span class="p">[</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
+  <span class="n">l</span><span class="o">.</span><span class="n">sort</span><span class="p">()</span>
+  <span class="k">print</span> <span class="s2">&quot;Heap at the end of the function</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">hp</span><span class="o">.</span><span class="n">heap</span><span class="p">()</span>
+  <span class="k">return</span> <span class="n">l</span>
+
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+ <span class="c1">#random_sort(2000000)</span>
+</pre></div>
+
+
+<p>1.运行时间</p>
+<p>装饰器(random_sort)</p>
+<p>timeit(random_sort):</p>
+<p><code>python -m timeit -n 4 -r 5 -s "import timing_functions" "timing_functions.random_sort(2000000)"</code></p>
+<p>注：-n 4 运行测试4次; -r 5每个测试重复平均5次</p>
+<p>系统time：</p>
+<p><code>time -p python timing_functions.py</code> </p>
+<p>cProfile(每个函数和方法):</p>
+<p><code>python -m cProfile -s cumulative timing_functions.py</code></p>
+<p>2.CPU时间</p>
+<p>line_profiler(random_sort2):</p>
+<p><code>pip install line_profiler</code></p>
+<p><code>kernprof -l -v timing_functions.py</code></p>
+<p>注：-l 逐行; -v 详细输出</p>
+<p>3.内存使用率</p>
+<p>memory_profiler(random_sort2):</p>
+<p><code>pip install memory_profiler psutil</code> pstil用于更快运行</p>
+<p><code>python -m memory_profiler timing_functions.py</code></p>
+<p>4.Heap信息</p>
+<p>代码各阶段被创建对象(random_sort3)：</p>
+<p><code>pip install guppy</code></p>
+<p><code>python timing_functions.py</code></p>
+</div>
+
+        </div>
+        <div id="footer">
+            <span>
+                Copyright © 2016 coder-james.
+                Powered by <a href="http://simiki.org/" target="_blank">Simiki</a>.
+            </span>
+        </div>
+        
+    </body>
+</html>
