@@ -35,6 +35,7 @@
 <p><code>make install</code></p>
 <p>glog-0.3.3需要automake-1.14,如果版本不足,需要手动源码安装(需安装autoconf,texinfo)，并将glog中test-driver的链接地址修改为编译安装automake的地址，如/usr/local/share/automake-1.14/test-driver</p>
 <h5 id="gflags">gflags</h5>
+<p><code>yum install gflags gflags-devel</code>，否则从源码编译：</p>
 <p><code>git clone https://github.com/gflags/gflags.git</code></p>
 <p><code>mkdir build &amp;&amp; cd build &amp;&amp; ccmake ..</code> 按c配置，e忽略警告，按c直到g可用，按g</p>
 <p><code>make &amp;&amp; make install</code></p>
